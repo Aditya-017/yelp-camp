@@ -21,7 +21,8 @@ const helmet = require("helmet");
 const MongoStore = require('connect-mongo');
 
 //const dbUrl=process.env.DB_URL
-const dbUrl='mongodb://localhost:27017/yelp-camp'
+//process.env.DB_URL ||
+const dbUrl= process.env.DB_URL ||'mongodb://localhost:27017/yelp-camp'
 //getyting connectiona and specifying db name
 mongoose.connect(dbUrl,
 {useCreateIndex:true,
@@ -43,12 +44,12 @@ app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname,'public')))
 app.use(mongoSanitize())
-
+ const secret=process.env.SECRET ||'thisshould be a bettersecret'
 const store =MongoStore.create({
     mongoUrl:dbUrl,
     
     crypto: {
-        secret: 'thisshould be a bettersecret',
+        secret,
       },
     touchAfter: 24*3600
 })
@@ -62,7 +63,7 @@ const sessionConfig={
   /*   store: MongoStore.create({
         mongoUrl:dbUrl
         }), */
-    secret:'thisshould be a bettersecret',
+    secret,
     resave: false,
     saveUninitialized: true, 
     cookie:{
@@ -163,9 +164,9 @@ app.use((err,req,res,next)=>{
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('error',{err})
 })
+const port =process.env.PORT || 3000
 
-
-app.listen(3000, ()=> {
-    console.log("running on 3000");
+app.listen(port, ()=> {
+    console.log(`running on ${port}`);
 })
 
