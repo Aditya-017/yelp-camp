@@ -3,7 +3,7 @@ const Campground=require('../models/campground');
 const cities=require('./cities')
 const { places, descriptors } = require('./seedHelpers');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp',{useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology:true})
+mongoose.connect('mongodb+srv://Aditya:7p)!X[;)P+=6yk`*@cluster0.ww9rf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology:true})
 
 const db=mongoose.connection;
 db.on("error",console.error.bind(console,"connection error"))
@@ -14,7 +14,7 @@ db.once("open",()=>{
 const sample = array => array[Math.floor(Math.random() * array.length)];
 const seedDB =async ()=>{
     await Campground.deleteMany({});
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 25; i++) {
         const rand=Math.floor(Math.random()*1000);
         const price=Math.floor(Math.random()*20)+10;
         const camp=new Campground  ({
@@ -38,7 +38,7 @@ const seedDB =async ()=>{
               ],
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos id aspernatur, incidunt natus sequi sit hic qui nostrum vitae tempore magni recusandae fuga molestias adipisci dicta deleniti, earum ducimus porro?Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos id aspernatur, incidunt natus sequi sit hic qui nostrum vitae tempore magni recusandae fuga molestias adipisci dicta deleniti, earum ducimus porro?',
             price:price,
-            author:"609fcbbc8942602c30a60e22"
+            author:"60bb2c3aa3e353124cfbccb1"
         })
         await camp.save();
         
